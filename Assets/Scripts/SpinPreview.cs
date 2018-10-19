@@ -4,13 +4,26 @@ using UnityEngine;
 
 public class SpinPreview : MonoBehaviour
 {
+    public SpinVolumetricBlur wheel;
+    public SpinVolumetricBlur prop;
 
     [Range(0, 876)]
     public float rpm;
     public int count;
 
-    public SpinVolumetricBlur wheel;
-    public SpinVolumetricBlur prop;
+    GameObject[] blades;
+    bool pause;
+    GUISkin skin;
+    
+    string[] objectSelectionText = { "Wheel", "Prop" };
+
+    int currentObject;
+    int lastObject;
+    int prevCount;
+    bool useVolumeBlur = true;
+    bool lastUseVolumeBlur = true;
+
+    float bladePitch = 20;
 
     void Start()
     {
@@ -26,13 +39,7 @@ public class SpinPreview : MonoBehaviour
 
         skin = Resources.Load("Skin") as GUISkin;
     }
-
-    GameObject[] blades;
-
-    bool pause;
-
-    GUISkin skin;
-
+    
     void Update()
     {
 
@@ -94,21 +101,28 @@ public class SpinPreview : MonoBehaviour
         }
     }
 
+    // For some reason Find() doesn't find objects immediately, skipping a frame is required
     IEnumerator WaitFrame()
     {
         yield return null;
         GetBlades();
     }
 
-    int currentObject;
-    string[] objectSelectionText = { "Wheel", "Prop" };
-    int lastObject;
-    int prevCount;
+    void Reinit()
+    {
+        wheel.meshCount = count;
+        wheel.Reinit();
 
-    bool useVolumeBlur = true;
-    bool lastUseVolumeBlur = true;
+        prop.meshCount = count;
+        prop.Reinit();
+    }
 
-    float bladePitch = 20;
+    // A very bad way of doing this. Forgive me, this is just for the preview :D
+    void GetBlades()
+    {
+        blades = GameObject.FindGameObjectsWithTag("Blade");
+        Debug.Log("Found: " + blades.Length + " blades");
+    }
 
     private void OnGUI()
     {
@@ -139,22 +153,7 @@ public class SpinPreview : MonoBehaviour
         GUILayout.EndArea();
     }
 
-    void Reinit()
-    {
-        wheel.meshCount = count;
-        wheel.Reinit();
-
-        prop.meshCount = count;
-        prop.Reinit();
-
-    }
-
-    void GetBlades()
-    {
-        blades = GameObject.FindGameObjectsWithTag("Blade");
-        Debug.Log("Found: " + blades.Length + " blades");
-    }
-
+    // Float slider
     void Slider(ref float value, string label, string numberFormat, float min, float max)
     {
         GUILayout.BeginHorizontal();
@@ -164,6 +163,7 @@ public class SpinPreview : MonoBehaviour
         GUILayout.EndHorizontal();
     }
 
+    // Int slider
     void Slider(ref int value, string label, int min, int max)
     {
         GUILayout.BeginHorizontal();
