@@ -4,19 +4,18 @@ using UnityEngine;
 
 public class SpinVolumetricBlur : MonoBehaviour
 {
-    public Vector3 rotationAxis = new Vector3(1, 0, 0);
+    public GameObject volumetricWheelModelRoot;
 
     public bool useVolumetricWheelBlur;
-    public GameObject volumetricWheelModelRoot;
-    public int volumetricWheelCount = 100;
-    Transform[] volumetricWheelModels;
+    public Vector3 rotationAxis = new Vector3(1, 0, 0);
+    public int volumetricWheelCount = 20;
     public Material volumetricWheelMaterial;
-    public float volumetricWheelRPMMult = 0.1f;
-    public float volumetricWheelRPMThreshold = 100;
+    public float volumetricWheelRPMMult = 0.02f;
 
+    public const float RPM2DPS = 6; // revolution per minute to degrees per second
+
+    Transform[] volumetricWheelModels;
     float offsetAngle;
-
-    public const float RPM2APS = 6; // revolution per minute to angles per second
 
     public void Reinit()
     {
@@ -58,9 +57,12 @@ public class SpinVolumetricBlur : MonoBehaviour
         volumetricWheelModelRoot.SetActive(false);
     }
 
-    public void UpdateVisibility()
+    public void UpdateVisibility(bool enable)
     {
+        volumetricWheelModelRoot.SetActive(!enable);
 
+        for (int i = 0; i < volumetricWheelCount; i++)
+            volumetricWheelModels[i].gameObject.SetActive(enable);
     }
 
     public void UpdateSpin(float rpm)
@@ -68,23 +70,13 @@ public class SpinVolumetricBlur : MonoBehaviour
         // Calculate angle - this is just for preview, but you don't need to calculate it every frame
         offsetAngle = volumetricWheelRPMMult / volumetricWheelCount;
 
-        if (!useVolumetricWheelBlur)
-        {
-            for (int i = 0; i < volumetricWheelCount; i++)
-                volumetricWheelModels[i].gameObject.SetActive(false);
+        volumetricWheelModelRoot.SetActive(false);
 
-            volumetricWheelModelRoot.SetActive(true);
-        }
-        else
+        for (int i = 0; i < volumetricWheelCount; i++)
         {
-            volumetricWheelModelRoot.SetActive(false);
-
-            for (int i = 0; i < volumetricWheelCount; i++)
-            {
-                volumetricWheelModels[i].gameObject.SetActive(true);
-                float angle = i * rpm * offsetAngle;
-                volumetricWheelModels[i].localEulerAngles = rotationAxis * angle;
-            }
+            volumetricWheelModels[i].gameObject.SetActive(true);
+            float angle = i * rpm * offsetAngle;
+            volumetricWheelModels[i].localEulerAngles = rotationAxis * angle;
         }
     }
 }

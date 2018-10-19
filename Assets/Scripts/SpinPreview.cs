@@ -67,14 +67,14 @@ public class SpinPreview : MonoBehaviour
             wheel.UpdateSpin(rpm);
 
             if (!pause)
-                wheel.transform.Rotate(wheel.rotationAxis, rpm * SpinVolumetricBlur.RPM2APS / 60);
+                wheel.transform.Rotate(wheel.rotationAxis, rpm * SpinVolumetricBlur.RPM2DPS / 60);
         }
         else
         {
             prop.UpdateSpin(rpm);
 
             if (!pause)
-                prop.transform.Rotate(prop.rotationAxis, rpm * SpinVolumetricBlur.RPM2APS / 60);
+                prop.transform.Rotate(prop.rotationAxis, rpm * SpinVolumetricBlur.RPM2DPS / 60);
 
             if (blades.Length != 0)
                 for (int i = 0; i < blades.Length; i++)
@@ -87,8 +87,11 @@ public class SpinPreview : MonoBehaviour
         prevCount = count;
         lastObject = currentObject;
 
-        wheel.useVolumetricWheelBlur = useVolumeBlur;
-        prop.useVolumetricWheelBlur = useVolumeBlur;
+        if (lastUseVolumeBlur != useVolumeBlur)
+        {
+            wheel.UpdateVisibility(useVolumeBlur);
+            prop.UpdateVisibility(useVolumeBlur);
+        }
     }
 
     IEnumerator WaitFrame()
@@ -103,6 +106,7 @@ public class SpinPreview : MonoBehaviour
     int prevCount;
 
     bool useVolumeBlur = true;
+    bool lastUseVolumeBlur = true;
 
     float bladePitch = 20;
 
