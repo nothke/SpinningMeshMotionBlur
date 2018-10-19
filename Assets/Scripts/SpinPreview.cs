@@ -14,8 +14,8 @@ public class SpinPreview : MonoBehaviour
 
     void Start()
     {
-        wheel.volumetricWheelCount = count;
-        wheel.volumetricWheelCount = count;
+        wheel.meshCount = count;
+        wheel.meshCount = count;
 
         wheel.Init();
         prop.Init();
@@ -125,7 +125,7 @@ public class SpinPreview : MonoBehaviour
         SpinVolumetricBlur cur = currentObject == 0 ? wheel : prop;
 
         Slider(ref rpm, "RPM", "F0", 0, 875.23f);
-        Slider(ref cur.volumetricWheelRPMMult, "Spread", "F2", 0, 0.1f);
+        Slider(ref cur.spreadPerRPM, "Spread", "F2", 0, 0.1f);
 
         Slider(ref count, "Mesh count", 2, 100);
 
@@ -141,10 +141,10 @@ public class SpinPreview : MonoBehaviour
 
     void Reinit()
     {
-        wheel.volumetricWheelCount = count;
+        wheel.meshCount = count;
         wheel.Reinit();
 
-        prop.volumetricWheelCount = count;
+        prop.meshCount = count;
         prop.Reinit();
 
     }

@@ -704,13 +704,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9a6dd208a834e34e997f8e0eb45b7d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumetricWheelModelRoot: {fileID: 1380084776}
-  useVolumetricWheelBlur: 1
+  spinningModelRoot: {fileID: 1380084776}
   rotationAxis: {x: 0, y: 0, z: -1}
-  volumetricWheelCount: 20
-  volumetricWheelMaterial: {fileID: 2100000, guid: 77c02f4d98aedf64a9341634ae7cc84b,
-    type: 2}
-  volumetricWheelRPMMult: 0.02
+  meshCount: 20
+  transparentMaterial: {fileID: 2100000, guid: 77c02f4d98aedf64a9341634ae7cc84b, type: 2}
+  spreadPerRPM: 0.02
 --- !u!1 &1094613687
 GameObject:
   m_ObjectHideFlags: 0
@@ -1242,13 +1240,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9a6dd208a834e34e997f8e0eb45b7d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumetricWheelModelRoot: {fileID: 1955018410}
-  useVolumetricWheelBlur: 1
+  spinningModelRoot: {fileID: 1955018410}
   rotationAxis: {x: 1, y: 0, z: 0}
-  volumetricWheelCount: 20
-  volumetricWheelMaterial: {fileID: 2100000, guid: b4d5dd464ce63404eb7046b7c48736c4,
-    type: 2}
-  volumetricWheelRPMMult: 0.02
+  meshCount: 20
+  transparentMaterial: {fileID: 2100000, guid: b4d5dd464ce63404eb7046b7c48736c4, type: 2}
+  spreadPerRPM: 0.02
 --- !u!1 &1955018410
 GameObject:
   m_ObjectHideFlags: 0
