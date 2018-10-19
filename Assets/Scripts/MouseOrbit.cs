@@ -34,16 +34,7 @@ public class MouseOrbit : MonoBehaviour
             child = transform.GetChild(0);
     }
 
-    Transform futureTarget;
-
-    public void SetTargetSmooth(Transform target)
-    {
-        lerping = 0;
-        futureTarget = target;
-    }
-
-    Vector3 position;
-    float lerping = 0;
+    //Vector3 position;
 
     void FixedUpdate()
     {
@@ -70,7 +61,7 @@ public class MouseOrbit : MonoBehaviour
 
 
         transform.rotation = rotation;
-        transform.position = position;
+        //transform.position = position;
 
         if (child)
             child.localPosition = new Vector3(0, 0, -distance);
