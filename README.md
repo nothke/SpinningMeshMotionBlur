@@ -1,5 +1,4 @@
 # SpinningMeshMotionBlur
-Motion blur for fast spinning objects by rendering multiple meshes - example
 
 An example of a technique mentioned in this blog post: https://nothkedev.blogspot.com/2018/10/correct-motion-blur-for-fast-rotating.html
 
